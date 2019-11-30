@@ -13,7 +13,7 @@ public class RecursiveAlgorithm {
     private static Integer Median = 0;
     
     public static <T extends Comparable> void main(String[] args) {
-        Integer a[] = {10, 9, 1, 7, 7, 9, 3, 2, 7};
+        Integer a[] = {1, 9, 1, 7, 7, 9, 3, 2, 7};
         Integer b[] = {2, 4, 1, 6, 8, 5, 3};
         computeArrayAvgMedian(a, b);
         System.out.println("* Average * = " + Average);
@@ -42,7 +42,7 @@ public class RecursiveAlgorithm {
     
     private static <T extends Comparable> T recursiveComputeArrayMedian(T[] a, int l , int r){
         int m = (l+r)/2;
-        if(l<=r) return a[l];
+        if(l>=r) return a[l];
         int[] pi = partition(a, a[m], l, r);
         if((pi[0]-l) > (r-pi[1])){  // Median is on the biger partition, in this case the left partition
             return recursiveComputeArrayMedian(a, l, pi[0]);
