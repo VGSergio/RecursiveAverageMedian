@@ -9,42 +9,45 @@ package recursivealgorithm;
  */
 public class RecursiveAlgorithm {
 
-    private static int Average = 0;
-    private static int Median = 0;
+    private static Integer Average = 0;
+    private static Integer Median = 0;
     
-    public static void main(String[] args) {
+    public static <T extends Comparable> void main(String[] args) {
         Integer a[] = {10, 9, 1, 7, 7, 9, 3, 2, 7};
         Integer b[] = {2, 4, 1, 6, 8, 5, 3};
-        ComputeArrayAvgMedian(a,b);
-        System.out.println(Average);
-        System.out.println(Median);
+        computeArrayAvgMedian(a, b);
+        System.out.println("* Average * = " + Average);
+        System.out.println("* Median * = " + Median);
     }
     
     /** 
      * Method that computes the avg and median of two arrays
      */
-    private static <T extends Comparable> void ComputeArrayAvgMedian(T[] a, T[] b){
-        T[] c = (T[]) new Comparable[a.length+b.length];
+    private static <T extends Comparable> void computeArrayAvgMedian(T[] a, T[] b){
+        T[] c = (T[]) new Comparable[a.length + b.length];
         int i = 0;
         while (i<a.length){
             c[i] = a[i];
             Average += (Integer) a[i];
             i++;
         }
-        while (i<b.length){
+        while (i<a.length){
             c[i] = b[i];
             Average += (Integer) a[i];
             i++;
         }
-        Average = Average/(a.length+b.length);
-        RecursiveComputeArrayMedian(c, 0, a.length-1);
+        Average /= (a.length+b.length);
+        Median = (Integer) recursiveComputeArrayMedian(c, 0, a.length-1);
     }
     
-    private static <T extends Comparable> void RecursiveComputeArrayMedian(T[] a, int l , int r){
+    private static <T extends Comparable> T recursiveComputeArrayMedian(T[] a, int l , int r){
         int m = (l+r)/2;
-        System.out.println(m);
-        if(l<r){
-            int[] pi = partition(a, m, l, r);
+        if(l<=r) return a[l];
+        int[] pi = partition(a, a[m], l, r);
+        if((pi[0]-l) > (r-pi[1])){  // Median is on the biger partition, in this case the left partition
+            return recursiveComputeArrayMedian(a, l, pi[0]);
+        } else {
+            return recursiveComputeArrayMedian(a, pi[1], r);
         }
         
     }
