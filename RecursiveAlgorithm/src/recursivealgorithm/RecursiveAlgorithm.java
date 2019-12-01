@@ -46,9 +46,9 @@ public class RecursiveAlgorithm {
         int[] pi = partition(a, a[m], l, r);
         if((pi[0]-l) > (r-pi[1])){  // Median is on the biger partition, in this case the left partition
             return recursiveComputeArrayMedian(a, l, pi[0]);
-        } else {
+        } else if((pi[0]-l) < (r-pi[1])) {
             return recursiveComputeArrayMedian(a, pi[1], r);
-        }
+        } else return a[m];
         
     }
     
