@@ -26,14 +26,14 @@ public class RecursiveAlgorithm {
     private static <T extends Comparable> void computeArrayAvgMedian(T[] a, T[] b){
         T[] c = (T[]) new Comparable[a.length + b.length];
         int j = 0;
-        for (int i=0; i<a.length; i++){
-            c[j] = a[i];
-            Average += (Integer) a[i];
+        for (T a1 : a) {
+            c[j] = a1;
+            Average += (Integer) a1;
             j++;
         }
-        for (int i=0; i<b.length; i++){
-            c[j] = b[i];
-            Average += (Integer) a[i];
+        for (T b1 : b){
+            c[j] = b1;
+            Average += (Integer) b1;
             j++;
         }
         Average /= (a.length+b.length);
@@ -44,7 +44,7 @@ public class RecursiveAlgorithm {
         int m = (l+r)/2;
         if(l>=r) return c[l];
         int[] pi = partition(c, c[m], l, r);
-        if((pi[0]-l) > (r-pi[1])){  // Median is on the biger partition, in this case the left partition
+        if(pi[0] > (c.length/2)){   // pi[0] is after the median
             return recursiveComputeArrayMedian(c, l, pi[0]);
         } else {
             return recursiveComputeArrayMedian(c, pi[1], r);
