@@ -9,8 +9,8 @@ package recursivealgorithm;
  */
 public class RecursiveAlgorithm {
 
-    private static Integer Average = 0;
-    private static Integer Median = 0;
+    private static int Average = 0;
+    private static int Median = 0;
     
     public static <T extends Comparable> void main(String[] args) {
         Integer a[] = {1, 9, 1, 7, 7, 9, 3, 2, 7};
@@ -44,10 +44,10 @@ public class RecursiveAlgorithm {
         int m = (l+r)/2;
         if(l>=r) return c[l];
         int[] pi = partition(c, c[m], l, r);
-        if(pi[0] > (c.length/2)){   // pi[0] is after the median
-            return recursiveComputeArrayMedian(c, l, pi[0]);
+        if(pi[1] > (c.length/2)){   // pi[0] is after the median
+            return recursiveComputeArrayMedian(c, l, pi[1]);
         } else {
-            return recursiveComputeArrayMedian(c, pi[1], r);
+            return recursiveComputeArrayMedian(c, pi[0], r);
         }
         
     }
