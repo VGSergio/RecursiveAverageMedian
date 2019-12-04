@@ -9,7 +9,7 @@ package recursivealgorithm;
  */
 public class RecursiveAlgorithm {
 
-    private static int Average = 0;
+    private static float Average = 0;
     private static int Median = 0;
     
     public static <T extends Comparable> void main(String[] args) {
@@ -26,14 +26,14 @@ public class RecursiveAlgorithm {
     private static <T extends Comparable> void computeArrayAvgMedian(T[] a, T[] b){
         T[] c = (T[]) new Comparable[a.length + b.length];
         int j = 0;
-        for (T a1 : a) {
-            c[j] = a1;
-            Average += (Integer) a1;
+        for (T ai : a) {
+            c[j] = ai;
+            Average += (Integer) ai;
             j++;
         }
-        for (T b1 : b){
-            c[j] = b1;
-            Average += (Integer) b1;
+        for (T bi : b){
+            c[j] = bi;
+            Average += (Integer) bi;
             j++;
         }
         Average /= (a.length+b.length);
@@ -44,7 +44,9 @@ public class RecursiveAlgorithm {
         int m = (l+r)/2;
         if(l>=r) return c[l];
         int[] pi = partition(c, c[m], l, r);
-        if(pi[1] > (c.length/2)){   // pi[0] is after the median
+        if(pi[1] == ((c.length-1)/2)){ // We take 1 because the index starts with 0
+            return c[pi[1]];
+        } else if(pi[1] > ((c.length-1)/2)){   // pi[0] is after the median
             return recursiveComputeArrayMedian(c, l, pi[1]);
         } else {
             return recursiveComputeArrayMedian(c, pi[0], r);
@@ -55,14 +57,14 @@ public class RecursiveAlgorithm {
     private static <T extends Comparable> int[] partition(T c[], T pivot, int l, int r){
         int l1 = l;
         int r1 = r;
-        while(l1 <= r1){
+        while(l1 < r1){
             while(c[l1].compareTo(pivot) < 0){
                 l1++;
             }
             while(c[r1].compareTo(pivot) > 0){
                 r1--;
             }
-            if(l1<=r1){
+            if(l1<r1){
                 T aux = c[l1];
                 c[l1]=c[r1];
                 c[r1]=aux;
