@@ -36,12 +36,12 @@ public class RecursiveAlgorithm {
             }
         }
         Average /= (a.length+b.length);
-        Median = (Integer) recursiveArrayMedian(c, 0, c.length-1);
+        Median = (Integer) iterativeArrayMedian(c/*, 0, c.length-1*/);
     }
     
     private static <T extends Comparable> T recursiveArrayMedian(T[] c, int l , int r){
-        int m = (l+r)/2;
         if(l>=r) return c[l];
+        int m = (l+r)/2;
         int[] pi = partition(c, c[m], l, r);
         if(pi[1] == ((c.length-1)/2)){ // We take 1 because the index starts with 0
             return c[pi[1]];
@@ -50,7 +50,23 @@ public class RecursiveAlgorithm {
         } else {
             return recursiveArrayMedian(c, pi[0], r);
         }
-        
+    }
+    
+    private static <T extends Comparable> T iterativeArrayMedian(T[]c){
+        int l = 0;
+        int r = c.length-1;
+        while(l<r){
+            int m = (l+r)/2;
+            int[] pi = partition(c, c[m], l, r);
+            if(pi[1] == ((c.length-1)/2)){ // We take 1 because the index starts with 0
+                return c[pi[1]];
+            } else if(pi[1] > ((c.length-1)/2)){   // pi[0] is after the median
+                r = pi[1];
+            } else {
+                l = pi[0];
+            }
+        }
+        return c[l];
     }
     
     private static <T extends Comparable> int[] partition(T c[], T pivot, int l, int r){
