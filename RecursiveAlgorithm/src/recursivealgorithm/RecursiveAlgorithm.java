@@ -15,7 +15,7 @@ public class RecursiveAlgorithm {
     public static <T extends Comparable> void main(String[] args) {
         Integer a[] = {1, 9, 1, 7, 7, 9, 3, 2, 7};
         Integer b[] = {2, 4, 1, 6, 8, 5, 3};
-        computeArrayAvgMedian(a, b);
+        mergeAndComputeAvg(a, b);
         System.out.println("* Average * = " + Average);
         System.out.println("* Median * = " + Median);
     }
@@ -23,33 +23,32 @@ public class RecursiveAlgorithm {
     /** 
      * Method that computes the avg and median of two arrays
      */
-    private static <T extends Comparable> void computeArrayAvgMedian(T[] a, T[] b){
+    private static <T extends Comparable> void mergeAndComputeAvg(T[] a, T[] b){
         T[] c = (T[]) new Comparable[a.length + b.length];
-        int j = 0;
-        for (T ai : a) {
-            c[j] = ai;
-            Average += (Integer) ai;
-            j++;
-        }
-        for (T bi : b){
-            c[j] = bi;
-            Average += (Integer) bi;
-            j++;
+        for(int i = 0; i < a.length || i < b.length; i++){
+            if(i<a.length){
+                c[i] = a[i];
+                Average += (Integer) a[i];
+            }
+            if(i<b.length){
+                c[i+a.length] = b[i];
+                Average += (Integer) b[i];
+            }
         }
         Average /= (a.length+b.length);
-        Median = (Integer) recursiveComputeArrayMedian(c, 0, c.length-1);
+        Median = (Integer) recursiveArrayMedian(c, 0, c.length-1);
     }
     
-    private static <T extends Comparable> T recursiveComputeArrayMedian(T[] c, int l , int r){
+    private static <T extends Comparable> T recursiveArrayMedian(T[] c, int l , int r){
         int m = (l+r)/2;
         if(l>=r) return c[l];
         int[] pi = partition(c, c[m], l, r);
         if(pi[1] == ((c.length-1)/2)){ // We take 1 because the index starts with 0
             return c[pi[1]];
         } else if(pi[1] > ((c.length-1)/2)){   // pi[0] is after the median
-            return recursiveComputeArrayMedian(c, l, pi[1]);
+            return recursiveArrayMedian(c, l, pi[1]);
         } else {
-            return recursiveComputeArrayMedian(c, pi[0], r);
+            return recursiveArrayMedian(c, pi[0], r);
         }
         
     }
